@@ -40,7 +40,7 @@ let Function =
 let constants (s:string) =
     match s.ToLower() with 
     | "e" -> Math.E
-    | "p" | "pi" | "π" -> Math.PI
+    | "p" | "pi" -> Math.PI
    
 let rec evaluate (node:Node)=
     match node with 
@@ -65,7 +65,7 @@ let rec traverse (root:Node)=
         printf "(%A))" (traverse rhs)
     | _ -> printfn ""
 
-let getInput = Console.ReadLine() + "#"
+let getInput() = Console.ReadLine() + "#"
 
 let Lex s = 
     let (|Symbol|Operator|Braket|Space|BadToken|EOF|) input = 
@@ -135,6 +135,16 @@ let Parse (token:Expression list) =
     let NextToken() = 
         index <- index + 1
         CurrentToken<- GetToken token index
+    let precedence expr isUnary = 
+        if isUnary = true then 
+            match expr with
+            | Add | Substract -> 3
+            | _ -> 0;
+        else
+            match expr with
+            | Multiply | Divide -> 2
+            | Add | Substract -> 1
+            | _ -> 0;
     let rec parseLeaf():Node =  
         match CurrentToken with 
         | Number(value) -> 
@@ -196,9 +206,15 @@ let Parse (token:Expression list) =
                     NextToken()
                     parseSecond(BinaryNode(lhs,operator.Item "-",parseFirst(EmptyLeaf)))
                 | _ -> lhs
+    
     parseSecond(EmptyLeaf)
-
 [<EntryPoint>] 
 let main args =
-    getInput|> Lex |> Parse |> evaluate |> printfn "%A"
+    let Interface = 
+        while true do
+            printf ">"
+            try
+                getInput() |> Lex |> Parse |> evaluate |> printfn "%A"
+             with
+                | :? System.Exception -> printfn "Syntax Error";
     0
