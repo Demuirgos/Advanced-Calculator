@@ -35,7 +35,7 @@ let Function =
                                                      ("exp",(Math.Exp));("log",(Math.Log));("abs",(Math.Abs));("sqrt",(Math.Sqrt));
                                                      ("sinh",(Math.Sinh));("cosh",(Math.Cosh));("tanh",(Math.Tanh));("acos",(Math.Acos));
                                                      ("asinh",(Math.Asinh));("acosh",(Math.Acosh));("atanh",(Math.Atanh));("fact",(fact));
-                                                     ("atan",(Math.Atan));("asin",(Math.Asin));("cein",(Math.Ceiling));("floor",(Math.Floor))]
+                                                     ("atan",(Math.Atan));("asin",(Math.Asin));("ceil",(Math.Ceiling));("floor",(Math.Floor))]
     unaryOperator |> Map.ofList
 let constants (s:string) =
     match s.ToLower() with 
