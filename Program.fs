@@ -179,20 +179,26 @@ let Parse (token:Expression list) =
             NextToken()
             parseUnit()
         | _ -> parseLeaf()
+    and parseZeroth(rhs:Node):Node=
+        match rhs with 
+        | EmptyLeaf -> parseZeroth(parseUnit())
+        | _ ->
+            match CurrentToken with 
+            | Power -> 
+                NextToken()
+                parseZeroth(BinaryNode(rhs,operator.Item "^",parseUnit()))
+            | _ -> rhs
     and parseFirst(lhs:Node):Node= //do it recursivly
         match lhs with 
-        | EmptyLeaf -> parseFirst(parseUnit())
+        | EmptyLeaf -> parseFirst(parseZeroth(EmptyLeaf))
         | _ ->
             match CurrentToken with 
             | Multiply-> 
                 NextToken()
-                parseFirst(BinaryNode(lhs,operator.Item "*",parseUnit()))
+                parseFirst(BinaryNode(lhs,operator.Item "*",parseZeroth(EmptyLeaf)))
             | Divide -> 
                 NextToken()
-                parseFirst(BinaryNode(lhs,operator.Item "/",parseUnit()))
-            | Power -> 
-                NextToken()
-                parseFirst(BinaryNode(lhs,operator.Item "^",parseUnit()))
+                parseFirst(BinaryNode(lhs,operator.Item "/",parseZeroth(EmptyLeaf)))
             | _ -> lhs
     and parseSecond(lhs:Node):Node= 
         match lhs with 
