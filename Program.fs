@@ -52,9 +52,9 @@ let rec evaluate (node:Node)=
 let rec traverse (root:Node)= 
     match root with 
     | BinaryNode(lhs,op,rhs) ->
-        printf "((%A)" (traverse lhs) 
+        traverse lhs
         printf "%A" op
-        printf "(%A))"(traverse rhs)
+        traverse rhs
     | LeafNumber(value) -> printf "(%A)" value
     | LeafVariable(value) -> printf "(%A)" value
     | FunctionNode(name,param) -> 
