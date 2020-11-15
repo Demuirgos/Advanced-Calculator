@@ -58,11 +58,11 @@ let rec traverse (root:Node)=
     | LeafNumber(value) -> printf "(%A)" value
     | LeafVariable(value) -> printf "(%A)" value
     | FunctionNode(name,param) -> 
-        printf "(%A" name
-        printf "(%A))" (traverse param)
+        printf "%A" name
+        traverse param
     | UnaryNode(op,rhs) -> 
-        printf "(%A" op
-        printf "(%A))" (traverse rhs)
+        printf "%A" op
+        traverse rhs
     | _ -> printfn ""
 
 let getInput() = Console.ReadLine() + "#"
