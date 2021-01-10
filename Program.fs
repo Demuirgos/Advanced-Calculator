@@ -222,5 +222,5 @@ let main args =
             try
                 getInput() |> Lex |> Parse |> evaluate |> printfn "%A"
              with
-                | :? System.Exception -> printfn "Syntax Error";
+                | :? System.Exception -> printfn "Syntax Error : Make sure your Expression is Valid";
     0
