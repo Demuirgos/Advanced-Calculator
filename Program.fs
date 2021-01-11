@@ -1,4 +1,3 @@
-﻿
 open System
 open System.Text.RegularExpressions
 
@@ -41,6 +40,7 @@ let constants (s:string) =
     match s.ToLower() with 
     | "e" -> Math.E
     | "p" | "pi" -> Math.PI
+    | "g" | "phi" -> 1.61803398875
    
 let rec evaluate (node:Node)=
     match node with 
